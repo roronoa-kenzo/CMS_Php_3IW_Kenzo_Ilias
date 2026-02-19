@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     pdo \
     pdo_mysql \
     zip \
-    opcache
+    opcache \
+    && a2enmod rewrite
 
 # Copier un php.ini personnalisé si besoin (monté via docker-compose)
 # WORKDIR /var/www/html

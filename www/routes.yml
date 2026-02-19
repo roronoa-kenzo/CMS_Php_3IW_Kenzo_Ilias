@@ -1,0 +1,8 @@
+/admin/page:
+    controller: admin
+    action: page
+
+    
+/admin/users:
+    controller: admin
+    action: users
