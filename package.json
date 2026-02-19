@@ -1,0 +1,13 @@
+{
+  "name": "cms-php-3iw",
+  "version": "1.0.0",
+  "description": "CMS PHP avec Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./www/css/input.css -o ./www/css/output.css --watch",
+    "build-css-prod": "tailwindcss -i ./www/css/input.css -o ./www/css/output.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
+
