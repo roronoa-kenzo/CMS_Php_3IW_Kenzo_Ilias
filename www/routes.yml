@@ -2,7 +2,46 @@
     controller: admin
     action: page
 
-    
 /admin/users:
     controller: admin
     action: users
+
+# Page d'accueil
+/:
+    controller: home
+    action: index
+    method: GET
+
+# Inscription
+/inscription:
+    controller: auth
+    action: inscriptionForm
+    method: GET
+
+/inscription-traitement:
+    controller: auth
+    action: inscription
+    method: POST
+
+# Connexion
+/connexion:
+    controller: auth
+    action: connexionForm
+    method: GET
+
+/connexion-traitement:
+    controller: auth
+    action: connexion
+    method: POST
+
+# Déconnexion
+/deconnexion:
+    controller: auth
+    action: deconnexion
+    method: GET
+
+# Activation du compte
+/activation:
+    controller: auth
+    action: activation
+    method: GET
