@@ -14,6 +14,7 @@
     <p>Connecté en tant que <strong><?= htmlspecialchars($isConnect['username']) ?></strong>
     — rôle : <?= htmlspecialchars($isConnect['role']) ?></p>
     <a href="/deconnexion">Se déconnecter</a>
+    <a href="/creer">Créer une page</a>
 
 <?php else: ?>
 

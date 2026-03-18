@@ -62,10 +62,9 @@ if (isset($routes[$uri]['method'])) {
 // 7. Appelle le bon controller et la bonne méthode
 //    Ex: controller: auth + action: connexionForm
 //    → charge controllers/auth.php → new Auth() → $controller->connexionForm()
-$controllerName = ucfirst($routes[$uri]['controller']);
+$controllerPath = $routes[$uri]['controller'];
+$controllerName = ucfirst(basename($controllerPath)); 
 $action         = $routes[$uri]['action'];
- 
-require_once __DIR__ . '/controllers/' . strtolower($controllerName) . '.php';
- 
+require_once __DIR__ . '/controllers/' . $controllerPath . '.php';
 $controller = new $controllerName();
 $controller->$action();

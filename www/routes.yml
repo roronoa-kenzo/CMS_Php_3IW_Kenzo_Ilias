@@ -45,3 +45,46 @@
     controller: auth
     action: activation
     method: GET
+
+# BACKOFFICE — gestion des pages
+/admin/pages:
+    controller: backoffice/page
+    action: liste
+    method: GET
+ 
+/admin/pages/creer:
+    controller: backoffice/page
+    action: creerForm
+    method: GET
+ 
+/admin/pages/creer-traitement:
+    controller: backoffice/page
+    action: creer
+    method: POST
+ 
+/admin/pages/modifier:
+    controller: backoffice/page
+    action: modifierForm
+    method: GET
+ 
+/admin/pages/modifier-traitement:
+    controller: backoffice/page
+    action: modifier
+    method: POST
+ 
+/admin/pages/supprimer:
+    controller: backoffice/page
+    action: supprimer
+    method: POST
+ 
+/admin/pages/publier:
+    controller: backoffice/page
+    action: publier
+    method: POST
+ 
+# FRONTOFFICE — affichage des pages
+/page/mon-slug:
+    controller: frontoffice/front
+    action: afficher
+    method: GET
+ 
