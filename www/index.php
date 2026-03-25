@@ -39,7 +39,14 @@ foreach (file(__DIR__ . '/routes.yml') as $line) {
         $routes[$currentRoute][$m[1]] = $m[2];
     }
 }
- 
+
+// Gère les routes dynamiques /page/mon-slug
+if (str_starts_with($uri, '/page/')) {
+    require_once __DIR__ . '/controllers/frontoffice/front.php';
+    $controller = new Front();
+    $controller->afficher();
+    exit;
+}
 // 5. Route introuvable → 404
 if (!isset($routes[$uri])) {
     http_response_code(404);

@@ -39,15 +39,11 @@ class Page extends Controller
     // -------------------------------------------------------
     public function creerForm(): void
     {
-        $isConnect = $this->isConnect();
-        if (!$isConnect) {
-            header('Location: /connexion');
-            exit;
-        }
+        // Seuls admin et editor peuvent créer
+        $this->requireRole(['admin', 'editor']);
 
-        $this->render('backoffice/pages/creer', [
-            'isConnect' => $isConnect,
-        ]);
+        // Si on arrive ici, c'est que le rôle est OK
+        $this->render('backoffice/pages/creer');
     }
 
     // -------------------------------------------------------
@@ -55,7 +51,9 @@ class Page extends Controller
     // URL : /admin/pages/creer-traitement
     // -------------------------------------------------------
     public function creer(): void
-    {
+    {   
+        // Seuls admin et editor peuvent créer
+        $this->requireRole(['admin', 'editor']);
         $isConnect = $this->isConnect();
         if (!$isConnect) {
             header('Location: /connexion');

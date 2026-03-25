@@ -41,7 +41,7 @@ if (!empty($_SESSION['erreur'])): ?>
     <br><br>
  
     <button type="submit">Se connecter</button>
- 
+    <a href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
 </form>
  
 <p>Pas encore de compte ? <a href="/inscription">S'inscrire</a></p>

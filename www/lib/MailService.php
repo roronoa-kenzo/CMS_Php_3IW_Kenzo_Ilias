@@ -39,15 +39,57 @@ class MailService
                 <p>Ce lien est valable 24h.</p>
             ";
 
-            // Version texte (pour les clients mail qui n'affichent pas le HTML)
+            // Version texte
             $mail->AltBody = "Bonjour $username ! Activez votre compte : $lien";
 
             $mail->send();
             return true;
 
         } catch (Exception $e) {
-            // En cas d'erreur on affiche le message pour déboguer
-            error_log("Erreur envoi mail : " . $mail->ErrorInfo);
+            error_log("Erreur envoi mail activation : " . $mail->ErrorInfo);
+            return false;
+        }
+    }
+
+    // Envoie un mail de réinitialisation de mot de passe
+    public static function envoyerResetMotDePasse(string $email, string $username, string $lien): bool
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            // --- Configuration SMTP Mailpit (comme pour l'activation) ---
+            $mail->isSMTP();
+            $mail->Host     = MAIL_HOST;  // 'mailpit'
+            $mail->Port     = MAIL_PORT;  // 1025
+            $mail->SMTPAuth = false;
+
+            // --- Expéditeur et destinataire ---
+            $mail->setFrom(MAIL_FROM, MAIL_FROM_NAME);
+            $mail->addAddress($email, $username);
+
+            // --- Contenu du mail ---
+            $mail->isHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Subject = 'Réinitialisation de votre mot de passe';
+
+            $mail->Body = "
+                <h2>Bonjour $username !</h2>
+                <p>Vous avez demandé à réinitialiser votre mot de passe.</p>
+                <p>Cliquez sur le lien ci-dessous pour en choisir un nouveau :</p>
+                <p><a href='$lien'>$lien</a></p>
+                <p>Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.</p>
+            ";
+
+            $mail->AltBody = "Bonjour $username !
+Vous avez demandé à réinitialiser votre mot de passe.
+Lien : $lien
+Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.";
+
+            $mail->send();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Erreur envoi mail reset : " . $mail->ErrorInfo);
             return false;
         }
     }

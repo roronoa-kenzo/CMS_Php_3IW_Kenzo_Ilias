@@ -46,45 +46,66 @@
     action: activation
     method: GET
 
+# MOT DE PASSE OUBLIÉ
+/mot-de-passe-oublie:
+    controller: auth
+    action: motDePasseOublieForm
+    method: GET
+
+/mot-de-passe-oublie-traitement:
+    controller: auth
+    action: motDePasseOublie
+    method: POST
+
+# RÉINITIALISATION DU MOT DE PASSE
+/reinitialiser-mot-de-passe:
+    controller: auth
+    action: resetMotDePasseForm
+    method: GET
+
+/reinitialiser-mot-de-passe-traitement:
+    controller: auth
+    action: resetMotDePasse
+    method: POST
+
 # BACKOFFICE — gestion des pages
 /admin/pages:
     controller: backoffice/page
     action: liste
     method: GET
- 
+
 /admin/pages/creer:
     controller: backoffice/page
     action: creerForm
     method: GET
- 
+
 /admin/pages/creer-traitement:
     controller: backoffice/page
     action: creer
     method: POST
- 
+
 /admin/pages/modifier:
     controller: backoffice/page
     action: modifierForm
     method: GET
- 
+
 /admin/pages/modifier-traitement:
     controller: backoffice/page
     action: modifier
     method: POST
- 
+
 /admin/pages/supprimer:
     controller: backoffice/page
     action: supprimer
     method: POST
- 
+
 /admin/pages/publier:
     controller: backoffice/page
     action: publier
     method: POST
- 
+
 # FRONTOFFICE — affichage des pages
 /page/mon-slug:
     controller: frontoffice/front
     action: afficher
     method: GET
- 

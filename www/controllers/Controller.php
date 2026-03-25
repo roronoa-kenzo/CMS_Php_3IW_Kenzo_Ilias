@@ -22,4 +22,38 @@ class Controller
         }
         return false;
     }
+
+    // Traduit un role_id en nom de rôle
+    protected function getRoleName(int $roleId): string
+    {
+        switch ($roleId) {
+            case 1:
+                return 'admin';
+            case 2:
+                return 'editor';
+            case 3:
+            default:
+                return 'visitor';
+        }
+    }
+
+    protected function requireRole(array $allowedRoles): void
+    {
+        // 1) Est-ce qu'il y a un utilisateur connecté ?
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['erreur'] = "Vous devez être connecté.";
+            header('Location: /connexion');
+            exit;
+        }
+
+        // 2) On récupère le rôle de l'utilisateur depuis la session
+        $userRole = $_SESSION['user']['role'] ?? null;
+
+        // 3) Est-ce que ce rôle fait partie des rôles autorisés ?
+        if ($userRole === null || !in_array($userRole, $allowedRoles, true)) {
+            $_SESSION['erreur'] = "Vous n'avez pas les droits pour accéder à cette page.";
+            header('Location: /');
+            exit;
+        }
+    }
 }
