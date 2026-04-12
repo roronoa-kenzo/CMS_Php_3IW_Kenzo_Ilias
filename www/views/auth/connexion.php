@@ -1,50 +1,58 @@
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-</head>
-<body>
- 
-<h1>Connexion</h1>
- 
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
- 
-// Affiche l'erreur s'il y en a une
-if (!empty($_SESSION['erreur'])): ?>
-    <div style="color:red; border:1px solid red; padding:10px;">
-        <?= htmlspecialchars($_SESSION['erreur']) ?>
-    </div>
-<?php unset($_SESSION['erreur']); endif; ?>
- 
-<!-- Affiche le message de succès (ex: après inscription) -->
-<?php if (!empty($_SESSION['succes'])): ?>
-    <div style="color:green; border:1px solid green; padding:10px;">
-        <?= $_SESSION['succes'] /* contient du HTML (lien activation) */ ?>
-    </div>
-<?php unset($_SESSION['succes']); endif; ?>
- 
-<!--
-    action="/connexion-traitement" → route POST dans routes.yml
-    Le formulaire envoie les données au controller auth → méthode connexion()
--->
-<form method="POST" action="/connexion-traitement">
- 
-    <label>Email</label><br>
-    <input type="email" name="email" autofocus>
-    <br><br>
- 
-    <label>Mot de passe</label><br>
-    <input type="password" name="password">
-    <br><br>
- 
-    <button type="submit">Se connecter</button>
-    <a href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
-</form>
- 
-<p>Pas encore de compte ? <a href="/inscription">S'inscrire</a></p>
- 
-</body>
-</html>
+
+$erreur = $_SESSION['erreur'] ?? null;
+$succes = $_SESSION['succes'] ?? null;
+
+unset($_SESSION['erreur'], $_SESSION['succes']);
+?>
+
+<section class="layout-grid layout-grid--split">
+    <article class="hero">
+        <span class="hero__kicker">Authentification</span>
+        <h1 class="hero__title">Reconnecte-toi a ton quartier general editorial.</h1>
+        <p class="hero__text">
+            Accede a ton tableau de bord, gere les pages du site et poursuis la publication de tes contenus FanDeWarhammerCMS.
+        </p>
+        <div class="hero__meta">
+            <span class="badge">Activation par email</span>
+            <span class="badge">Recuperation de mot de passe</span>
+        </div>
+    </article>
+
+    <article class="panel stack">
+        <div class="panel__header">
+            <span class="section__kicker">Connexion</span>
+            <h2 class="section__title">Acces membre</h2>
+        </div>
+
+        <div class="notices">
+            <?php if ($erreur): ?>
+                <div class="notice notice--error"><?= htmlspecialchars($erreur) ?></div>
+            <?php endif; ?>
+
+            <?php if ($succes): ?>
+                <div class="notice notice--success"><?= $succes ?></div>
+            <?php endif; ?>
+        </div>
+
+        <form class="field-list" method="POST" action="/connexion-traitement">
+            <div class="field">
+                <label class="field__label" for="email">Email</label>
+                <input class="field__input" id="email" type="email" name="email" autocomplete="email" autofocus required>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="password">Mot de passe</label>
+                <input class="field__input" id="password" type="password" name="password" autocomplete="current-password" required>
+            </div>
+
+            <div class="inline-actions">
+                <button class="button" type="submit">Se connecter</button>
+                <a class="button button--ghost" href="/mot-de-passe-oublie">Mot de passe oublie ?</a>
+            </div>
+        </form>
+
+        <p class="section__lede">Pas encore de compte ? <a href="/inscription">Inscris-toi</a>.</p>
+    </article>
+</section>

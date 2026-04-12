@@ -12,6 +12,11 @@
     action: index
     method: GET
 
+/design-guide:
+    controller: home
+    action: designGuide
+    method: GET
+
 # Inscription
 /inscription:
     controller: auth

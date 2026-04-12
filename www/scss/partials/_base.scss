@@ -1,0 +1,99 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background: var(--bg-page);
+}
+
+body::before,
+body::after {
+  position: fixed;
+  inset: auto;
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(12px);
+}
+
+body::before {
+  top: 1rem;
+  right: -5rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 999px;
+  background: var(--bg-orb-a);
+}
+
+body::after {
+  bottom: 2rem;
+  left: -4rem;
+  width: 17rem;
+  height: 17rem;
+  border-radius: 999px;
+  background: var(--bg-orb-b);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+code {
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-secondary);
+}
+
+summary {
+  cursor: pointer;
+}
+
+dialog {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+dialog::backdrop {
+  background: rgba(3, 10, 20, 0.52);
+  backdrop-filter: blur(6px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

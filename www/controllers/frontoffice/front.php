@@ -40,6 +40,7 @@ class Front extends Controller
         $this->render('frontoffice/page', [
             'isConnect' => $isConnect,
             'page'      => $page,
+            'title'     => $page['titre'],
         ]);
     }
 }

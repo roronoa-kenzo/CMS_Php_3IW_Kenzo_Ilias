@@ -1,0 +1,44 @@
+@mixin glass-panel($surface: var(--surface-primary), $shadow: var(--shadow-card)) {
+  border: var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: $surface;
+  box-shadow: $shadow;
+  backdrop-filter: blur(18px);
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 2.9rem;
+  padding: 0.7rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+@mixin button-variant($bg, $color, $border: transparent, $shadow: none) {
+  background: $bg;
+  color: $color;
+  border-color: $border;
+  box-shadow: $shadow;
+}
+
+@mixin section-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+@mixin respond-md {
+  @media (min-width: 48rem) {
+    @content;
+  }
+}

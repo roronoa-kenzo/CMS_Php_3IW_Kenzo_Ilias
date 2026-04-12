@@ -22,7 +22,9 @@ class Auth extends Controller
             header('Location: /');
             exit;
         }
-        $this->render('auth/inscription');
+        $this->render('auth/inscription', [
+            'title' => 'Inscription',
+        ]);
     }
 
     // INSCRIPTION — traite le formulaire
@@ -98,7 +100,9 @@ class Auth extends Controller
             header('Location: /');
             exit;
         }
-        $this->render('auth/connexion');
+        $this->render('auth/connexion', [
+            'title' => 'Connexion',
+        ]);
     }
 
     // CONNEXION — traite le formulaire
@@ -144,7 +148,9 @@ class Auth extends Controller
             exit;
         }
 
-        $this->render('auth/mot_de_passe_oublie');
+        $this->render('auth/mot_de_passe_oublie', [
+            'title' => 'Mot de passe oublie',
+        ]);
     }
 
     // 2) Traite le formulaire "Mot de passe oublié"
@@ -204,7 +210,10 @@ class Auth extends Controller
         }
 
         // On passe le token à la vue
-        $this->render('auth/reset_mot_de_passe', ['token' => $token]);
+        $this->render('auth/reset_mot_de_passe', [
+            'title' => 'Nouveau mot de passe',
+            'token' => $token,
+        ]);
     }
 
     // 4) Traite le formulaire "nouveau mot de passe"

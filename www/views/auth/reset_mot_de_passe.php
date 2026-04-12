@@ -1,18 +1,44 @@
-<h1>Nouveau mot de passe</h1>
+<?php
+$erreur = $_SESSION['erreur'] ?? null;
+unset($_SESSION['erreur']);
+?>
 
-<?php if (!empty($_SESSION['erreur'])): ?>
-    <p style="color:red;"><?= htmlspecialchars($_SESSION['erreur']) ?></p>
-    <?php unset($_SESSION['erreur']); ?>
-<?php endif; ?>
+<section class="layout-grid layout-grid--split">
+    <article class="hero">
+        <span class="hero__kicker">Reinitialisation</span>
+        <h1 class="hero__title">Forge un nouveau mot de passe pour reprendre le controle.</h1>
+        <p class="hero__text">
+            Choisis un mot de passe robuste pour securiser ton acces au backoffice et a tes contenus.
+        </p>
+    </article>
 
-<form action="/reinitialiser-mot-de-passe-traitement" method="post">
-    <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+    <article class="panel stack">
+        <div class="panel__header">
+            <span class="section__kicker">Securite</span>
+            <h2 class="section__title">Nouveau mot de passe</h2>
+        </div>
 
-    <label for="password">Nouveau mot de passe :</label>
-    <input type="password" name="password" id="password" required>
+        <?php if ($erreur): ?>
+            <div class="notice notice--error"><?= htmlspecialchars($erreur) ?></div>
+        <?php endif; ?>
 
-    <label for="password_confirm">Confirmer le mot de passe :</label>
-    <input type="password" name="password_confirm" id="password_confirm" required>
+        <form class="field-list" action="/reinitialiser-mot-de-passe-traitement" method="post">
+            <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-    <button type="submit">Changer le mot de passe</button>
-</form>
+            <div class="field">
+                <label class="field__label" for="password">Nouveau mot de passe</label>
+                <input class="field__input" type="password" name="password" id="password" autocomplete="new-password" required>
+            </div>
+
+            <div class="field">
+                <label class="field__label" for="password_confirm">Confirmer le mot de passe</label>
+                <input class="field__input" type="password" name="password_confirm" id="password_confirm" autocomplete="new-password" required>
+            </div>
+
+            <div class="inline-actions">
+                <button class="button" type="submit">Changer le mot de passe</button>
+                <a class="button button--ghost" href="/connexion">Retour a la connexion</a>
+            </div>
+        </form>
+    </article>
+</section>

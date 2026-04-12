@@ -16,7 +16,16 @@ class Home extends Controller
         }
  
         $this->render('main', [
+            'title' => 'Accueil',
             'isConnect' => $isConnect,
+        ]);
+    }
+
+    public function designGuide(): void
+    {
+        $this->render('design-guide', [
+            'title' => 'Design guide',
+            'isConnect' => $this->isConnect(),
         ]);
     }
 }

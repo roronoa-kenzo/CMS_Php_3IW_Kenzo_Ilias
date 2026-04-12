@@ -29,6 +29,7 @@ class Page extends Controller
 
         $this->render('backoffice/pages/liste', [
             'isConnect' => $isConnect,
+            'title'     => 'Gestion des pages',
             'pages'     => $pages,
         ]);
     }
@@ -43,7 +44,9 @@ class Page extends Controller
         $this->requireRole(['admin', 'editor']);
 
         // Si on arrive ici, c'est que le rôle est OK
-        $this->render('backoffice/pages/creer');
+        $this->render('backoffice/pages/creer', [
+            'title' => 'Creer une page',
+        ]);
     }
 
     // -------------------------------------------------------
@@ -124,6 +127,7 @@ class Page extends Controller
 
         $this->render('backoffice/pages/modifier', [
             'isConnect' => $isConnect,
+            'title'     => 'Modifier une page',
             'page'      => $page,
         ]);
     }

@@ -1,45 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= htmlspecialchars($page['titre']) ?></title>
-</head>
-<body>
+<article class="page-card stack">
+    <header class="page-card__header">
+        <span class="eyebrow">Chronique publiee</span>
+        <h1 class="page-title"><?= htmlspecialchars($page['titre']) ?></h1>
+        <div class="content-meta">
+            <span class="badge">Auteur: <?= htmlspecialchars($page['auteur']) ?></span>
+            <span class="badge">Publie le <?= date('d/m/Y', strtotime($page['created_at'])) ?></span>
+        </div>
+    </header>
 
-<!-- Barre de navigation simple -->
-<nav>
-    <a href="/">Accueil</a>
-    <?php if ($isConnect): ?>
-        | <a href="/admin/pages">Backoffice</a>
-        | <a href="/deconnexion">Déconnexion</a>
-    <?php else: ?>
-        | <a href="/connexion">Connexion</a>
-    <?php endif; ?>
-</nav>
+    <div class="rich-text">
+        <?= nl2br(htmlspecialchars($page['contenu'])) ?>
+    </div>
 
-<hr>
-
-<!-- $page vient du controller avec toutes les infos de la page -->
-<h1><?= htmlspecialchars($page['titre']) ?></h1>
-
-<p>
-    <small>
-        Par <strong><?= htmlspecialchars($page['auteur']) ?></strong>
-        — le <?= date('d/m/Y', strtotime($page['created_at'])) ?>
-    </small>
-</p>
-
-<hr>
-
-<!-- Le contenu de la page -->
-<!-- On utilise nl2br() pour afficher les retours à la ligne -->
-<div>
-    <?= nl2br(htmlspecialchars($page['contenu'])) ?>
-</div>
-
-<hr>
-
-<a href="/">← Retour à l'accueil</a>
-
-</body>
-</html>
+    <div class="panel__actions">
+        <a class="button button--ghost" href="/">Retour a l'accueil</a>
+        <?php if ($isConnect && in_array($isConnect['role'], ['admin', 'editor'], true)): ?>
+            <a class="button" href="/admin/pages">Administrer les pages</a>
+        <?php endif; ?>
+    </div>
+</article>

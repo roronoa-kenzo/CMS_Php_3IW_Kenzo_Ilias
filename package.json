@@ -1,13 +1,12 @@
 {
   "name": "cms-php-3iw",
   "version": "1.0.0",
-  "description": "CMS PHP avec Tailwind CSS",
+  "description": "FanDeWarhammerCMS",
   "scripts": {
-    "build-css": "tailwindcss -i ./www/css/input.css -o ./www/css/output.css --watch",
-    "build-css-prod": "tailwindcss -i ./www/css/input.css -o ./www/css/output.css --minify"
+    "build:css": "sass ./www/scss/main.scss ./www/css/output.css --no-source-map",
+    "watch:css": "sass --watch ./www/scss/main.scss:./www/css/output.css --no-source-map"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.1"
+    "sass": "^1.99.0"
   }
 }
-

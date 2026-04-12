@@ -1,49 +1,56 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Créer une page</title>
-</head>
-<body>
+<?php
+$erreurs = $_SESSION['erreurs'] ?? [];
+$ancien = $_SESSION['ancien'] ?? [];
 
-<h1>Créer une page</h1>
+unset($_SESSION['erreurs'], $_SESSION['ancien']);
+?>
 
-<?php if (!empty($_SESSION['erreurs'])): ?>
-    <div style="color:red">
-        <ul>
-            <?php foreach ($_SESSION['erreurs'] as $e): ?>
-                <li><?= htmlspecialchars($e) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-    <?php unset($_SESSION['erreurs']); ?>
-<?php endif; ?>
+<section class="layout-grid layout-grid--two-columns">
+    <article class="hero">
+        <span class="hero__kicker">Creation</span>
+        <h1 class="hero__title">Prepare une nouvelle page pour le frontoffice.</h1>
+        <p class="hero__text">
+            Definis un titre clair, un contenu riche et un slug propre pour integrer la page dans FanDeWarhammerCMS.
+        </p>
+    </article>
 
-<!--
-    Les valeurs $_SESSION['ancien'] servent à re-remplir le formulaire
-    si l'utilisateur a fait une erreur
--->
-<?php $ancien = $_SESSION['ancien'] ?? []; unset($_SESSION['ancien']); ?>
+    <article class="panel stack">
+        <div class="panel__header">
+            <span class="section__kicker">Edition</span>
+            <h2 class="section__title">Creer une page</h2>
+        </div>
 
-<form method="POST" action="/admin/pages/creer-traitement">
+        <?php if (!empty($erreurs)): ?>
+            <div class="notice notice--error">
+                <ul class="list-errors">
+                    <?php foreach ($erreurs as $e): ?>
+                        <li><?= htmlspecialchars($e) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-    <label>Titre</label><br>
-    <input type="text" name="titre" value="<?= htmlspecialchars($ancien['titre'] ?? '') ?>">
-    <br><br>
+        <form class="field-list" method="POST" action="/admin/pages/creer-traitement">
+            <div class="field">
+                <label class="field__label" for="titre">Titre</label>
+                <input class="field__input" id="titre" type="text" name="titre" value="<?= htmlspecialchars($ancien['titre'] ?? '') ?>" required>
+            </div>
 
-    <label>Contenu</label><br>
-    <textarea name="contenu" rows="10" cols="50"><?= htmlspecialchars($ancien['contenu'] ?? '') ?></textarea>
-    <br><br>
+            <div class="field">
+                <label class="field__label" for="contenu">Contenu</label>
+                <textarea class="field__textarea" id="contenu" name="contenu" required><?= htmlspecialchars($ancien['contenu'] ?? '') ?></textarea>
+            </div>
 
-    <label>Slug (URL) — ex: mon-article</label><br>
-    <input type="text" name="slug" value="<?= htmlspecialchars($ancien['slug'] ?? '') ?>">
-    <small>Uniquement des lettres minuscules, chiffres et tirets</small>
-    <br><br>
+            <div class="field">
+                <label class="field__label" for="slug">Slug URL</label>
+                <input class="field__input" id="slug" type="text" name="slug" value="<?= htmlspecialchars($ancien['slug'] ?? '') ?>" required>
+                <span class="hint">Utilise uniquement des lettres minuscules, des chiffres et des tirets. Exemple: mon-article.</span>
+            </div>
 
-    <button type="submit">Créer la page</button>
-    <a href="/admin/pages">Annuler</a>
-
-</form>
-
-</body>
-</html>
+            <div class="inline-actions">
+                <button class="button" type="submit">Creer la page</button>
+                <a class="button button--ghost" href="/admin/pages">Annuler</a>
+            </div>
+        </form>
+    </article>
+</section>

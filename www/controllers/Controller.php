@@ -4,14 +4,24 @@ class Controller
     // Affiche une vue et lui passe des données
     protected function render(string $view, array $data = []): void
     {
-        extract($data);
         $viewPath = __DIR__ . '/../views/' . $view . '.php';
         if (!file_exists($viewPath)) {
             http_response_code(500);
             echo "Vue introuvable : " . htmlspecialchars($view);
             exit;
         }
+
+        extract($data);
+
+        $title = $data['title'] ?? 'FanDeWarhammerCMS';
+        $siteName = 'FanDeWarhammerCMS';
+        $pageClass = 'page--' . str_replace(['/', '\\'], '-', $view);
+
+        ob_start();
         require $viewPath;
+        $content = ob_get_clean();
+
+        require __DIR__ . '/../views/layouts/base.php';
     }
 
     // Retourne les infos de l'utilisateur connecté, ou false sinon
