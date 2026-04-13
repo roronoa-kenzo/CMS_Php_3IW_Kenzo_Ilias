@@ -6,7 +6,7 @@ Refonte visuelle et structurelle du CMS PHP pour repondre au sujet de soutenance
 
 - suppression complete de Tailwind
 - mise en place d'un design system CSS/SCSS maison
-- direction visuelle Frutiger Aero moderne adaptee a l'univers `FanDeWarhammerCMS`
+- direction visuelle moderne adaptee a l'univers `FanDeWarhammerCMS`
 - dark mode + theme alternatif pilotables dans l'interface
 - layout partage pour factoriser `head`, navigation, footer et chargement des assets
 - bibliotheque de composants visible dans une page dediee `design guide`

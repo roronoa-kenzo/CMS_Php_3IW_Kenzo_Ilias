@@ -4,12 +4,12 @@ $currentUser = $isAuthenticated ? $isConnect : null;
 $pageTitle = $title . ' | ' . $siteName;
 ?>
 <!DOCTYPE html>
-<html lang="fr" data-mode="auto" data-theme="aero">
+<html lang="fr" data-mode="auto" data-theme="verdant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <meta name="description" content="FanDeWarhammerCMS, un CMS PHP au style Frutiger Aero moderne inspire de l'univers Warhammer.">
+    <meta name="description" content="FanDeWarhammerCMS, un CMS PHP moderne inspire de l'univers Warhammer.">
     <link rel="stylesheet" href="/css/output.css">
 </head>
 <body class="site-body <?= htmlspecialchars($pageClass) ?>">
@@ -39,7 +39,7 @@ $pageTitle = $title . ' | ' . $siteName;
                 <label class="control">
                     <span class="control__label">Theme</span>
                     <select class="control__select" data-theme-select aria-label="Choisir le theme visuel">
-                        <option value="aero">Verdant Forge</option>
+                        <option value="verdant">Verdant Forge</option>
                         <option value="cathedral">Relic Grove</option>
                     </select>
                 </label>

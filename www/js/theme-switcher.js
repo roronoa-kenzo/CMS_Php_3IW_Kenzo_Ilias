@@ -10,10 +10,15 @@ const storageKeys = {
 };
 
 const allowedModes = ["auto", "light", "dark"];
-const allowedThemes = ["aero", "cathedral"];
+const allowedThemes = ["verdant", "cathedral"];
 
 function readSetting(key, allowedValues, fallback) {
-  const value = window.localStorage.getItem(key);
+  let value = window.localStorage.getItem(key);
+
+  if (key === storageKeys.theme && value === "aero") {
+    value = "verdant";
+    persistSetting(storageKeys.theme, "verdant");
+  }
 
   if (value && allowedValues.includes(value)) {
     return value;
@@ -32,7 +37,7 @@ function persistSetting(key, value) {
 
 function initializeControls() {
   const mode = readSetting(storageKeys.mode, allowedModes, "auto");
-  const theme = readSetting(storageKeys.theme, allowedThemes, "aero");
+  const theme = readSetting(storageKeys.theme, allowedThemes, "verdant");
 
   applySetting("data-mode", mode);
   applySetting("data-theme", theme);

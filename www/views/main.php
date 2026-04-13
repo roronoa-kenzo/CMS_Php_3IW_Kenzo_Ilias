@@ -1,6 +1,6 @@
 <section class="hero">
     <span class="hero__kicker">FanDeWarhammerCMS</span>
-    <h1 class="hero__title">Publie, archive et administre tes pages dans un cockpit Frutiger Aero inspire de Warhammer.</h1>
+    <h1 class="hero__title">Publie, archive et administre tes pages dans un cockpit inspire de Warhammer.</h1>
     <p class="hero__text">
         Ce CMS met en scene le frontoffice, les formulaires et le backoffice dans une interface lumineuse, vitree et moderne,
         avec une ambiance de command bridge pour tes chroniques, factions et recits.

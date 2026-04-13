@@ -2,8 +2,8 @@
     <span class="hero__kicker">Design system</span>
     <h1 class="hero__title">Bibliotheque de composants FanDeWarhammerCMS</h1>
     <p class="hero__text">
-        Cette page centralise les composants reutilisables du projet et montre comment le langage visuel Frutiger Aero
-        moderne s'applique au frontoffice, a l'authentification et au backoffice.
+        Cette page centralise les composants reutilisables du projet et montre comment le langage visuel du design system
+        s'applique au frontoffice, a l'authentification et au backoffice.
     </p>
     <div class="hero__meta">
         <span class="badge">BEM-friendly</span>
