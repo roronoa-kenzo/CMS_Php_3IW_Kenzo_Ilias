@@ -15,14 +15,14 @@ class Front extends Controller
         $this->pageModel = new PageModel();
     }
 
-    // Affiche une page publiée via son slug
-    // URL : /page/mon-slug
+    // On affiche une page publiée via son slug
+        // URL : /page/mon-slug
     public function afficher(): void
     {
         $isConnect = $this->isConnect();
 
         // On récupère le slug depuis l'URL
-        // ex: /page/mon-article → on enlève le "/page/" pour garder "mon-article"
+            // ex: /page/mon-article → on enlève le "/page/" pour garder "mon-article"
         $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $slug = str_replace('/page/', '', $uri);
 
@@ -40,7 +40,6 @@ class Front extends Controller
         $this->render('frontoffice/page', [
             'isConnect' => $isConnect,
             'page'      => $page,
-            'title'     => $page['titre'],
         ]);
     }
 }

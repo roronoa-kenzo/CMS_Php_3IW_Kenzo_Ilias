@@ -11,10 +11,8 @@ class Page extends Controller
         $this->pageModel = new PageModel();
     }
 
-    // -------------------------------------------------------
-    // LISTE — affiche toutes les pages
+    // On liste — affiche toutes les pages
     // URL : /admin/pages
-    // -------------------------------------------------------
     public function liste(): void
     {
         // On vérifie que l'utilisateur est connecté
@@ -29,30 +27,23 @@ class Page extends Controller
 
         $this->render('backoffice/pages/liste', [
             'isConnect' => $isConnect,
-            'title'     => 'Gestion des pages',
             'pages'     => $pages,
         ]);
     }
 
-    // -------------------------------------------------------
-    // CRÉER — affiche le formulaire
+    // On créer — affiche le formulaire
     // URL : /admin/pages/creer
-    // -------------------------------------------------------
     public function creerForm(): void
     {
         // Seuls admin et editor peuvent créer
         $this->requireRole(['admin', 'editor']);
 
         // Si on arrive ici, c'est que le rôle est OK
-        $this->render('backoffice/pages/creer', [
-            'title' => 'Creer une page',
-        ]);
+        $this->render('backoffice/pages/creer');
     }
 
-    // -------------------------------------------------------
-    // CRÉER — traite le formulaire (POST)
-    // URL : /admin/pages/creer-traitement
-    // -------------------------------------------------------
+    // On crée la page en traitant le formulaire (POST)
+        // URL : /admin/pages/creer-traitement
     public function creer(): void
     {   
         // Seuls admin et editor peuvent créer
@@ -103,10 +94,8 @@ class Page extends Controller
         exit;
     }
 
-    // -------------------------------------------------------
-    // MODIFIER — affiche le formulaire
-    // URL : /admin/pages/modifier?id=1
-    // -------------------------------------------------------
+    // On modifie la page en affichant le formulaire
+     // URL : /admin/pages/modifier?id=1
     public function modifierForm(): void
     {
         $isConnect = $this->isConnect();
@@ -127,15 +116,12 @@ class Page extends Controller
 
         $this->render('backoffice/pages/modifier', [
             'isConnect' => $isConnect,
-            'title'     => 'Modifier une page',
             'page'      => $page,
         ]);
     }
 
-    // -------------------------------------------------------
-    // MODIFIER — traite le formulaire (POST)
+    // On modifie la page en traitant le formulaire (POST)
     // URL : /admin/pages/modifier-traitement
-    // -------------------------------------------------------
     public function modifier(): void
     {
         $isConnect = $this->isConnect();
@@ -176,10 +162,8 @@ class Page extends Controller
         exit;
     }
 
-    // -------------------------------------------------------
     // SUPPRIMER — (POST)
     // URL : /admin/pages/supprimer
-    // -------------------------------------------------------
     public function supprimer(): void
     {
         $isConnect = $this->isConnect();
@@ -197,10 +181,8 @@ class Page extends Controller
         exit;
     }
 
-    // -------------------------------------------------------
     // PUBLIER / DÉPUBLIER — (POST)
     // URL : /admin/pages/publier
-    // -------------------------------------------------------
     public function publier(): void
     {
         $isConnect = $this->isConnect();
@@ -211,7 +193,7 @@ class Page extends Controller
 
         $id = (int)($_POST['id'] ?? 0);
 
-        // Change publiee → brouillon ou brouillon → publiee
+        // On change le statut de la page : publiee → brouillon ou brouillon → publiee
         $this->pageModel->changerStatut($id);
 
         $_SESSION['succes'] = "Statut de la page mis à jour.";

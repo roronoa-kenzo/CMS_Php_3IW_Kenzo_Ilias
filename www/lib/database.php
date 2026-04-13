@@ -1,15 +1,28 @@
 <?php
+
 namespace Application\Lib\Database;
 
 class DatabaseConnection
 {
-    public ?\PDO $database = null;
+    private static ?DatabaseConnection $instance = null;
+    private ?\PDO $database = null;
+
+    // empêche new DatabaseConnection()
+    private function __construct() {}
+    //  point d’entrée unique
+    public static function getInstance(): DatabaseConnection
+    {
+        if (self::$instance === null) {
+            self::$instance = new DatabaseConnection();
+        }
+
+        return self::$instance;
+    }
 
     public function getConnection(): \PDO
     {
         if ($this->database === null) {
 
-            // Les constantes sont définies dans index.php via le fichier .env
             $this->database = new \PDO(
                 'mysql:host=db;dbname=' . MARIADB_DATABASE . ';charset=utf8',
                 MARIADB_USER,

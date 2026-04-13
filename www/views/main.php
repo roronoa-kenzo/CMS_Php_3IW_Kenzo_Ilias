@@ -8,8 +8,12 @@
 
     <div class="hero__meta">
         <?php if ($isConnect): ?>
-            <span class="badge badge--success">Connecte: <?= htmlspecialchars($isConnect['username']) ?></span>
-            <span class="badge">Role: <?= htmlspecialchars($isConnect['role']) ?></span>
+            <span class="badge badge--success">
+                Connecte: <?= htmlspecialchars($isConnect['username']) ?>
+            </span>
+            <span class="badge">
+                Role: <?= htmlspecialchars($isConnect['role']) ?>
+            </span>
         <?php else: ?>
             <span class="badge badge--warning">Mode visiteur</span>
             <span class="badge">Connexion requise pour le backoffice</span>
@@ -18,11 +22,17 @@
 
     <div class="hero__actions">
         <a class="button button--ghost" href="/design-guide">Voir le design guide</a>
+
         <?php if ($isConnect): ?>
-            <a class="button" href="/admin/pages">Ouvrir le backoffice</a>
+
+            <?php if ($isConnect['role'] === 'admin'): ?>
+                <a class="button" href="/admin/pages">Ouvrir le backoffice</a>
+            <?php endif; ?>
+
             <?php if (in_array($isConnect['role'], ['admin', 'editor'], true)): ?>
                 <a class="button button--ghost" href="/admin/pages/creer">Creer une page</a>
             <?php endif; ?>
+
         <?php else: ?>
             <a class="button" href="/connexion">Se connecter</a>
             <a class="button button--ghost" href="/inscription">Creer un compte</a>

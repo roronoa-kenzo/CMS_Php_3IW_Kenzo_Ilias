@@ -1,7 +1,7 @@
 <?php
 class Controller
 {
-    // Affiche une vue et lui passe des données
+// Affiche une vue et lui passe des données
     protected function render(string $view, array $data = []): void
     {
         $viewPath = __DIR__ . '/../views/' . $view . '.php';
@@ -33,9 +33,9 @@ class Controller
         return false;
     }
 
-    // Traduit un role_id en nom de rôle
+    // On traduit un role_id en nom de rôle
     protected function getRoleName(int $roleId): string
-    {
+    { 
         switch ($roleId) {
             case 1:
                 return 'admin';

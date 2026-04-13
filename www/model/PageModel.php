@@ -9,13 +9,10 @@ class PageModel
 
     public function __construct()
     {
-        $db = new DatabaseConnection();
-        $this->pdo = $db->getConnection();
+        $this->pdo = DatabaseConnection::getInstance()->getConnection();
     }
-
-    // -------------------------------------------------------
+    
     // Retourne TOUTES les pages (pour la liste backoffice)
-    // -------------------------------------------------------
     public function toutesLesPages(): array
     {
         $req = $this->pdo->query('
@@ -26,10 +23,7 @@ class PageModel
         ');
         return $req->fetchAll();
     }
-
-    // -------------------------------------------------------
     // Retourne uniquement les pages PUBLIÉES (pour le frontoffice)
-    // -------------------------------------------------------
     public function pagesPubliees(): array
     {
         $req = $this->pdo->query('
@@ -42,9 +36,7 @@ class PageModel
         return $req->fetchAll();
     }
 
-    // -------------------------------------------------------
     // Trouve une page par son ID (pour modifier/supprimer)
-    // -------------------------------------------------------
     public function trouverParId(int $id): array|false
     {
         $req = $this->pdo->prepare('
@@ -56,11 +48,8 @@ class PageModel
         $req->execute([$id]);
         return $req->fetch();
     }
-
-    // -------------------------------------------------------
     // Trouve une page par son slug (pour le frontoffice)
     // ex: /page/mon-article → slug = "mon-article"
-    // -------------------------------------------------------
     public function trouverParSlug(string $slug): array|false
     {
         $req = $this->pdo->prepare('
@@ -73,9 +62,7 @@ class PageModel
         return $req->fetch();
     }
 
-    // -------------------------------------------------------
-    // Crée une nouvelle page
-    // -------------------------------------------------------
+    // On crée une nouvelle page
     public function creer(string $titre, string $contenu, string $slug, int $auteurId): void
     {
         $req = $this->pdo->prepare('
@@ -86,9 +73,7 @@ class PageModel
         $req->execute([$titre, $contenu, $slug, $auteurId]);
     }
 
-    // -------------------------------------------------------
     // Modifie une page existante
-    // -------------------------------------------------------
     public function modifier(int $id, string $titre, string $contenu, string $slug): void
     {
         $req = $this->pdo->prepare('
@@ -97,18 +82,14 @@ class PageModel
         $req->execute([$titre, $contenu, $slug, $id]);
     }
 
-    // -------------------------------------------------------
     // Supprime une page
-    // -------------------------------------------------------
     public function supprimer(int $id): void
     {
         $req = $this->pdo->prepare('DELETE FROM pages WHERE id = ?');
         $req->execute([$id]);
     }
 
-    // -------------------------------------------------------
-    // Change le statut d'une page (publiée ↔ brouillon)
-    // -------------------------------------------------------
+    // On change le statut d'une page (publiée ↔ brouillon)
     public function changerStatut(int $id): void
     {
         // Si c'est "publiee" → passe à "brouillon" et inversement
@@ -120,9 +101,7 @@ class PageModel
         $req->execute([$id]);
     }
 
-    // -------------------------------------------------------
-    // Vérifie si un slug existe déjà (pour éviter les doublons)
-    // -------------------------------------------------------
+    // On verifie si un slug existe déjà (pour éviter les doublons)
     public function slugExiste(string $slug, ?int $exclureId = null): bool
     {
         if ($exclureId) {

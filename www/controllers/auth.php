@@ -1,7 +1,5 @@
 <?php
 // www/controllers/auth.php
-// La session est déjà démarrée dans index.php, pas besoin de session_start() ici
-
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../model/UserModel.php';
 require_once __DIR__ . '/../lib/MailService.php';
@@ -22,9 +20,7 @@ class Auth extends Controller
             header('Location: /');
             exit;
         }
-        $this->render('auth/inscription', [
-            'title' => 'Inscription',
-        ]);
+        $this->render('auth/inscription');
     }
 
     // INSCRIPTION — traite le formulaire
@@ -100,9 +96,7 @@ class Auth extends Controller
             header('Location: /');
             exit;
         }
-        $this->render('auth/connexion', [
-            'title' => 'Connexion',
-        ]);
+        $this->render('auth/connexion');
     }
 
     // CONNEXION — traite le formulaire
@@ -148,9 +142,7 @@ class Auth extends Controller
             exit;
         }
 
-        $this->render('auth/mot_de_passe_oublie', [
-            'title' => 'Mot de passe oublie',
-        ]);
+        $this->render('auth/mot_de_passe_oublie');
     }
 
     // 2) Traite le formulaire "Mot de passe oublié"
@@ -167,7 +159,7 @@ class Auth extends Controller
         // On cherche l'utilisateur
         $user = $this->userModel->trouverParEmail($email);
 
-        // Pour rester simple (et un peu sécurisé) :
+        // On reste simple (et un peu sécurisé) :
         // on affiche toujours le même message, même si l'email n'existe pas.
         if ($user) {
             // On crée un token aléatoire
@@ -178,13 +170,12 @@ class Auth extends Controller
             // On enregistre ça en base
             $this->userModel->definirResetToken($user['id'], $token, $expiresAt);
 
-            // Lien de réinitialisation (adapter le domaine si besoin)
+            // Lien de réinitialisation
             $resetLink = APP_URL . '/reinitialiser-mot-de-passe?token=' . urlencode($token);
             // Envoi du mail grâce à ton MailService
             MailService::envoyerResetMotDePasse($user['email'], $user['username'], $resetLink);}
 
         $_SESSION['succes'] = "Si un compte existe avec cet email, un lien a été envoyé.";
-        // ➜ on te renvoie vers la page de connexion comme demandé
         header('Location: /connexion');
         exit;
     }
@@ -210,10 +201,7 @@ class Auth extends Controller
         }
 
         // On passe le token à la vue
-        $this->render('auth/reset_mot_de_passe', [
-            'title' => 'Nouveau mot de passe',
-            'token' => $token,
-        ]);
+        $this->render('auth/reset_mot_de_passe', ['token' => $token]);
     }
 
     // 4) Traite le formulaire "nouveau mot de passe"
@@ -254,7 +242,6 @@ class Auth extends Controller
         exit;
     }
 
-    // DÉCONNEXION
     public function deconnexion(): void
     {
         session_unset();

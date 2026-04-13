@@ -12,15 +12,11 @@ class UserModel
     private \PDO $pdo;
 
     public function __construct()
-    {
-        // On crée une connexion via la classe qui existe déjà dans lib/database.php
-        $db = new DatabaseConnection();
-        $this->pdo = $db->getConnection();
-    }
-
-    // ------------------------------------------------------
-    // Cherche un utilisateur par son email (pour la connexion / reset)
-    // ------------------------------------------------------
+        {
+            // j'utilise la methode singleton pour la connexion à la BDD
+            $this->pdo = DatabaseConnection::getInstance()->getConnection();
+        }
+    // On Cherche un utilisateur par son email (pour la connexion / reset)
     public function trouverParEmail(string $email): ?array
     {
         $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
@@ -30,7 +26,7 @@ class UserModel
         return $user ?: null;
     }
 
-    // Enregistre le token de reset
+    //je stocke un code secret pour reset le mot de passe
     public function definirResetToken(int $userId, string $token, string $expiresAt): void
     {
         $sql = "UPDATE users 
@@ -45,7 +41,7 @@ class UserModel
         ]);
     }
 
-    // Trouve un utilisateur avec un token de reset
+    // Je trouve un utilisateur avec un token de reset
     public function trouverParResetToken(string $token): ?array
     {
         $sql = "SELECT * FROM users WHERE reset_token = :token LIMIT 1";
@@ -55,7 +51,7 @@ class UserModel
         return $user ?: null;
     }
 
-    // Met à jour le mot de passe et supprime le token
+    // On met à jour le mot de passe et supprime le token
     public function mettreAJourMotDePasseEtViderToken(int $userId, string $passwordHash): void
     {
         $sql = "UPDATE users
@@ -70,9 +66,7 @@ class UserModel
         ]);
     }
 
-    // ------------------------------------------------------
-    // Vérifie si un email existe déjà (pour l'inscription)
-    // ------------------------------------------------------
+    // On verifie si un email existe déjà (pour l'inscription)
     public function emailExiste(string $email): bool
     {
         $req = $this->pdo->prepare('SELECT id FROM users WHERE email = ?');
@@ -80,22 +74,17 @@ class UserModel
         return $req->fetch() !== false;
     }
 
-    // ------------------------------------------------------
-    // Vérifie si un username existe déjà (pour l'inscription)
-    // ------------------------------------------------------
+    // On verifie si un username existe déjà (pour l'inscription)
     public function usernameExiste(string $username): bool
     {
         $req = $this->pdo->prepare('SELECT id FROM users WHERE username = ?');
         $req->execute([$username]);
         return $req->fetch() !== false;
     }
-
-    // ------------------------------------------------------
-    // Crée un nouvel utilisateur dans la BDD
-    // ------------------------------------------------------
+    // On crée un nouvel utilisateur dans la BDD
     public function creer(string $username, string $email, string $motDePasse, string $token): void
     {
-        // IMPORTANT : on ne stocke JAMAIS le mot de passe en clair !
+        // on ne stocke JAMAIS le mot de passe en clair dans la BDD, on le hash avec password_hash()
         $hash = password_hash($motDePasse, PASSWORD_DEFAULT);
 
         $req = $this->pdo->prepare('
@@ -106,9 +95,7 @@ class UserModel
         $req->execute([$username, $email, $hash, $token]);
     }
 
-    // ------------------------------------------------------
     // Active un compte avec le token reçu par mail
-    // ------------------------------------------------------
     public function activer(string $token): bool
     {
         $req = $this->pdo->prepare('
@@ -117,6 +104,6 @@ class UserModel
             WHERE activation_token = ?
         ');
         $req->execute([$token]);
-        return $req->rowCount() > 0; // true = un compte a bien été activé
+        return $req->rowCount() > 0; // true = la notre compte a été activé, false = token invalide
     }
 }
